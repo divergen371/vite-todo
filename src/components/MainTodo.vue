@@ -1,66 +1,32 @@
 <script setup>
 import { ref } from 'vue'
-import { useTodoList } from '../composables/useTodoList.js'
+import { useTodoList } from '../composables/useTodoList'
+
 const todoRef = ref('')
-const todoListRef = ref([])
-const ls = localStorage.todoList
 const isEditRef = ref(false)
-let editId = -1
-const editTodo = () => {
-  /** 編集対象となるTODOを取得 */
-  const todo = todoListRef.value.find((todo) => todo.id === editId)
-  /** TODOリストから編集対象のインデックスを取得 */
-  const idx = todoListRef.value.findIndex((todo) => todo.id === editId)
-  /** taskを編集後のTODOで置き換え */
-  todo.task = todoRef.value
-  /** インデックスをもとに対象オブジェクトを置き換え */
-  todoListRef.value.splice(idx, 1, todo)
-  /** ローカルストレージに保存 */
-  localStorage.todoList = JSON.stringify(todoListRef.value)
-  isEditRef.value = false
-  editIndex = -1
-  todoRef.value = ''
-}
-const deleteTodo = (id) => {
-  const { todo, idx } = useTodoList(id)
-  const delMsg = '「' + todo.task + '」を削除しますか？'
-  if (!confirm(delMsg)) {
-    return
-  }
-  todoListRef.value.splice(idx, 1)
-  localStorage.todoList = JSON.stringify(todoListRef.value)
+const { todoListRef, add, show, edit, del, check } = useTodoList()
+const addTodo = () => {
+  add(todoRef.value)
+  todoRef.value
 }
 
-/** 入力欄にTODOを表示する
- *
- * @param {number} id
- * @returns {Ref<string>} todoRef.value
- */
 const showTodo = (id) => {
-  const todo = todoListRef.value.find((todo) => todo.id === id)
-  todoRef.value = todo.task
-  isEditRef.value = true
-  editId = id
+  todoRef.value = show(id)
+  isEditRef.value = false
 }
-todoListRef.value = ls ? JSON.parse(ls) : []
-/** TODOを追加する
- * @function
- */
-const addTodo = () => {
-  /**
-   * タスクIDを簡易的にミリ秒で登録
-   * @type {number}
-   */
-  const id = new Date().getTime()
-  /**
-   *  用意した配列にTODOを格納
-   */
-  todoListRef.value.push({ id: id, task: todoRef.value })
-  /**
-   * ローカルストレージに保存
-   */
-  localStorage.todoList = JSON.stringify(todoListRef.value)
+
+const editTodo = () => {
+  edit(todoRef.value)
+  isEditRef.value = false
   todoRef.value = ''
+}
+
+const deleteTodo = (id) => {
+  del(id)
+}
+
+const changeCheck = (id) => {
+  check(id)
 }
 </script>
 

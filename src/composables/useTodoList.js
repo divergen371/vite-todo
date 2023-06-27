@@ -1,23 +1,13 @@
 import { ref } from 'vue'
 
-export const useTodoList = (id) => {
+export const useTodoList = () => {
   const ls = localStorage.todoList
   const todoListRef = ref([])
   todoListRef.value = ls ? JSON.parse(ls) : []
 
   const add = (task) => {
-    /**
-     * タスクIDを簡易的にミリ秒で登録
-     * @type {number}
-     */
     const id = new Date().getTime()
-    /**
-     *  用意した配列にTODOを格納
-     */
     todoListRef.value.push({ id: id, task: task })
-    /**
-     * ローカルストレージに保存
-     */
     localStorage.todoList = JSON.stringify(todoListRef.value)
   }
 

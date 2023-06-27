@@ -8,7 +8,6 @@ const todoRef = ref('')
     <input type="text" name="" id="" class="todo_input" v-model="todoRef" placeholder="+ TODOを入力" />
     <button class="btn">追加</button>
   </div>
-  {{ todoRef }}
 </template>
 
 <style scoped>

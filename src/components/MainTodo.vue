@@ -37,7 +37,7 @@ const test = () => {
 <template>
   <div class="box_input">
     <input type="text" class="todo_input" v-model="todoRef" placeholder="+ TODOを入力" />
-    <button class="btn" @click="addTodo">追加</button>
+    <BaseButton color="blue" @click="addTodo">追加</BaseButton>
   </div>
   <div class="box_list">
     <div class="todo_list" v-for="todo in todoListRef" :key="todo.id">
@@ -45,12 +45,10 @@ const test = () => {
         <input type="checkbox" class="check" @change="changeCheck(todo.id)" :checked="todo.checked" />
         <label>{{ todo.task }}</label>
       </div>
-      <div class="btns">
-        <BaseButton class="btn green" @on-click="showTodo(todo.id)">編</BaseButton>
-        <BaseButton class="btn green" @on-click="editTodo" v-if="isEditRef">変更</BaseButton>
-        <BaseButton class="btn" @on-click="addTodo" v-else>追加</BaseButton>
-        <BaseButton class="btn pink" @on-click="deleteTodo(todo.id)">削</BaseButton>
-      </div>
+      <BaseButton color="green" @on-click="showTodo(todo.id)">編集</BaseButton>
+      <BaseButton color="green" @on-click="editTodo" v-if="isEditRef">変更</BaseButton>
+      <BaseButton color="blue" @on-click="addTodo" v-else>追加</BaseButton>
+      <BaseButton color="pink" @on-click="deleteTodo(todo.id)">削除</BaseButton>
     </div>
     <div class="finCount">
       <span class="counter">完了 {{ countFin }}</span>
@@ -72,14 +70,6 @@ const test = () => {
   border-radius: 6px;
 }
 
-.btn {
-  padding: 8px;
-  background-color: #03a9f4;
-  border-radius: 6px;
-  color: #fff;
-  text-align: center;
-  font-size: 14px;
-}
 .box_list {
   margin-top: 20px;
   display: flex;
@@ -105,12 +95,6 @@ const test = () => {
 .btns {
   display: flex;
   gap: 4px;
-}
-.green {
-  background-color: #00c853;
-}
-.pink {
-  background-color: #ff4081;
 }
 .fin {
   text-decoration: line-through;

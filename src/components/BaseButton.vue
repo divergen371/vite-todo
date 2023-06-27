@@ -7,7 +7,7 @@ const onClick = () => {
 </script>
 
 <template>
-  <button class="btn" @click="onClick" :class="props.color"><slot /></button>
+  <button class="btn" :class="props.color" @click="onClick"><slot /></button>
 </template>
 
 <style scoped>
@@ -24,7 +24,7 @@ const onClick = () => {
 .blue {
   background-color: #03a9f4;
 }
-.red {
+.pink {
   background-color: #ff4018;
 }
 </style>

@@ -3,6 +3,16 @@ import { ref } from 'vue'
 const todoRef = ref('')
 const todoListRef = ref([])
 const ls = localStorage.todoList
+
+/** 入力欄にTODOを表示する
+ *
+ * @param {number} id
+ * @returns {Ref<string>} todoRef.value
+ */
+const showTodo = (id) => {
+  const todo = todoListRef.value.find((todo) => todo.id === id)
+  todoRef.value = todo.task
+}
 todoListRef.value = ls ? JSON.parse(ls) : []
 /** TODOを追加する
  * @function
@@ -37,7 +47,7 @@ const addTodo = () => {
         <label>{{ todo.task }}</label>
       </div>
       <div class="btns">
-        <button class="btn green">編</button>
+        <button class="btn green" @click="showTodo(todo.id)">編</button>
         <button class="btn pink">削</button>
       </div>
     </div>

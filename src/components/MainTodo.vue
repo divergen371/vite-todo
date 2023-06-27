@@ -1,9 +1,26 @@
 <script setup>
 import { ref } from 'vue'
 const todoRef = ref('')
+const todoListRef = ref([])
 
+/** TODOを追加する
+ * @function
+ */
 const addTodo = () => {
-  localStorage.todoList = todoRef.value
+  /**
+   * タスクIDを簡易的にミリ秒で登録
+   * @type {number}
+   */
+  const id = new Date().getTime()
+  /**
+   *  用意した配列にTODOを格納
+   */
+  todoListRef.value.push({ id: id, task: todoRef.value })
+  /**
+   * ローカルストレージに保存
+   */
+  localStorage.todoList = JSON.stringify(todoListRef.value)
+  todoRef.value = ''
 }
 </script>
 

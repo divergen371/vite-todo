@@ -1,10 +1,14 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+const todoRef = ref('')
+</script>
 
 <template>
   <div class="box_input">
-    <input type="text" name="" id="" class="todo_input" placeholder="+ TODOを入力" />
+    <input type="text" name="" id="" class="todo_input" v-model="todoRef" placeholder="+ TODOを入力" />
     <button class="btn">追加</button>
   </div>
+  {{ todoRef }}
 </template>
 
 <style scoped>

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useTodoList } from '../composables/useTodoList'
 import BaseButton from './BaseButton.vue'
+import ButtonAdd from './ButtonAdd.vue'
 
 const todoRef = ref('')
 const isEditRef = ref(false)
@@ -13,7 +14,7 @@ const addTodo = () => {
 
 const showTodo = (id) => {
   todoRef.value = show(id)
-  isEditRef.value = false
+  isEditRef.value = true
 }
 
 const editTodo = () => {
@@ -29,15 +30,12 @@ const deleteTodo = (id) => {
 const changeCheck = (id) => {
   check(id)
 }
-const test = () => {
-  console.log('test')
-}
 </script>
 
 <template>
   <div class="box_input">
     <input type="text" class="todo_input" v-model="todoRef" placeholder="+ TODOを入力" />
-    <BaseButton color="blue" @click="addTodo">追加</BaseButton>
+    <ButtonAdd @add-click="addTodo">追加</ButtonAdd>
   </div>
   <div class="box_list">
     <div class="todo_list" v-for="todo in todoListRef" :key="todo.id">
@@ -47,7 +45,7 @@ const test = () => {
       </div>
       <BaseButton color="green" @on-click="showTodo(todo.id)">編集</BaseButton>
       <BaseButton color="green" @on-click="editTodo" v-if="isEditRef">変更</BaseButton>
-      <BaseButton color="blue" @on-click="addTodo" v-else>追加</BaseButton>
+      <ButtonAdd @add-click="addTodo" v-else>追加</ButtonAdd>
       <BaseButton color="pink" @on-click="deleteTodo(todo.id)">削除</BaseButton>
     </div>
     <div class="finCount">

@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 /**
  * 関数 `useTodoList` は、タスクを追加、表示、編集、削除、確認するメソッドを含む Todo リストを作成し、そのリストをローカル ストレージに保存します。
@@ -16,7 +16,7 @@ export const useTodoList = () => {
    */
   const add = (task) => {
     const id = new Date().getTime()
-    todoListRef.value.push({ id: id, task: task })
+    todoListRef.value.push({ id: id, task: task, checked: false })
     localStorage.todoList = JSON.stringify(todoListRef.value)
   }
 
@@ -101,6 +101,10 @@ export const useTodoList = () => {
     todoListRef.value.splice(idx, 1, todo)
     localStorage.todoList = JSON.stringify(todoListRef.value)
   }
+  const countFin = computed(() => {
+    const finArr = todoListRef.value.filter((todo) => todo.checked)
+    return finArr.length
+  })
 
-  return { todoListRef, add, show, edit, del, check }
+  return { todoListRef, add, show, edit, del, check, countFin }
 }

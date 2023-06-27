@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useTodoList } from '../composables/useTodoList.js'
 const todoRef = ref('')
 const todoListRef = ref([])
 const ls = localStorage.todoList
@@ -21,8 +22,7 @@ const editTodo = () => {
   todoRef.value = ''
 }
 const deleteTodo = (id) => {
-  const todo = todoListRef.value.find((todo) => todo.id === id)
-  const idx = todoListRef.value.findIndex((todo) => todo.id === id)
+  const { todo, idx } = useTodoList(id)
   const delMsg = '「' + todo.task + '」を削除しますか？'
   if (!confirm(delMsg)) {
     return

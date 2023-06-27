@@ -3,6 +3,33 @@ import { ref } from 'vue'
 const todoRef = ref('')
 const todoListRef = ref([])
 const ls = localStorage.todoList
+const isEditRef = ref(false)
+let editId = -1
+const editTodo = () => {
+  /** 編集対象となるTODOを取得 */
+  const todo = todoListRef.value.find((todo) => todo.id === editId)
+  /** TODOリストから編集対象のインデックスを取得 */
+  const idx = todoListRef.value.findIndex((todo) => todo.id === editId)
+  /** taskを編集後のTODOで置き換え */
+  todo.task = todoRef.value
+  /** インデックスをもとに対象オブジェクトを置き換え */
+  todoListRef.value.splice(idx, 1, todo)
+  /** ローカルストレージに保存 */
+  localStorage.todoList = JSON.stringify(todoListRef.value)
+  isEditRef.value = false
+  editIndex = -1
+  todoRef.value = ''
+}
+const deleteTodo = (id) => {
+  const todo = todoListRef.value.find((todo) => todo.id === id)
+  const idx = todoListRef.value.findIndex((todo) => todo.id === id)
+  const delMsg = '「' + todo.task + '」を削除しますか？'
+  if (!confirm(delMsg)) {
+    return
+  }
+  todoListRef.value.splice(idx, 1)
+  localStorage.todoList = JSON.stringify(todoListRef.value)
+}
 
 /** 入力欄にTODOを表示する
  *
@@ -12,6 +39,8 @@ const ls = localStorage.todoList
 const showTodo = (id) => {
   const todo = todoListRef.value.find((todo) => todo.id === id)
   todoRef.value = todo.task
+  isEditRef.value = true
+  editId = id
 }
 todoListRef.value = ls ? JSON.parse(ls) : []
 /** TODOを追加する
@@ -48,7 +77,9 @@ const addTodo = () => {
       </div>
       <div class="btns">
         <button class="btn green" @click="showTodo(todo.id)">編</button>
-        <button class="btn pink">削</button>
+        <button class="btn green" @click="editTodo" v-if="isEditRef">変更</button>
+        <button class="btn" @click="addTodo" v-else>追加</button>
+        <button class="btn pink" @click="deleteTodo(todo.id)">削</button>
       </div>
     </div>
   </div>

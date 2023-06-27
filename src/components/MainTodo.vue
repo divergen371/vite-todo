@@ -29,13 +29,12 @@ const deleteTodo = (id) => {
 const changeCheck = (id) => {
   check(id)
 }
+const test = () => {
+  console.log('test')
+}
 </script>
 
 <template>
-  <BaseButton color="blue">追加</BaseButton>
-  <BaseButton color="green">編</BaseButton>
-  <BaseButton color="red">削</BaseButton>
-  <BaseButton color="green">変更</BaseButton>
   <div class="box_input">
     <input type="text" class="todo_input" v-model="todoRef" placeholder="+ TODOを入力" />
     <button class="btn" @click="addTodo">追加</button>
@@ -47,15 +46,15 @@ const changeCheck = (id) => {
         <label>{{ todo.task }}</label>
       </div>
       <div class="btns">
-        <button class="btn green" @click="showTodo(todo.id)">編</button>
-        <button class="btn green" @click="editTodo" v-if="isEditRef">変更</button>
-        <button class="btn" @click="addTodo" v-else>追加</button>
-        <button class="btn pink" @click="deleteTodo(todo.id)">削</button>
+        <BaseButton class="btn green" @on-click="showTodo(todo.id)">編</BaseButton>
+        <BaseButton class="btn green" @on-click="editTodo" v-if="isEditRef">変更</BaseButton>
+        <BaseButton class="btn" @on-click="addTodo" v-else>追加</BaseButton>
+        <BaseButton class="btn pink" @on-click="deleteTodo(todo.id)">削</BaseButton>
       </div>
     </div>
     <div class="finCount">
-      <span>完了 {{ countFin }}</span>
-      <span>未完了{{ todoListRef.length - countFin }}</span>
+      <span class="counter">完了 {{ countFin }}</span>
+      <span>未完了 {{ todoListRef.length - countFin }}</span>
     </div>
   </div>
 </template>
@@ -121,5 +120,8 @@ const changeCheck = (id) => {
 .finCount {
   margin-top: 8px;
   font-size: 0.8em;
+}
+.counter {
+  margin: 4px;
 }
 </style>

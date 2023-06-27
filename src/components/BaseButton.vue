@@ -1,10 +1,13 @@
 <script setup>
 const props = defineProps({ color: String })
-const aaa = () => {}
+const emit = defineEmits(['onClick'])
+const onClick = () => {
+  emit('on-click')
+}
 </script>
 
 <template>
-  <button class="btn" @click="aaa" :class="props.color"><slot /></button>
+  <button class="btn" @click="onClick" :class="props.color"><slot /></button>
 </template>
 
 <style scoped>

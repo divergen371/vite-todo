@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useTodoList } from '../composables/useTodoList'
+import BaseButton from './BaseButton.vue'
 
 const todoRef = ref('')
 const isEditRef = ref(false)
@@ -31,6 +32,10 @@ const changeCheck = (id) => {
 </script>
 
 <template>
+  <BaseButton color="blue">追加</BaseButton>
+  <BaseButton color="green">編</BaseButton>
+  <BaseButton color="red">削</BaseButton>
+  <BaseButton color="green">変更</BaseButton>
   <div class="box_input">
     <input type="text" class="todo_input" v-model="todoRef" placeholder="+ TODOを入力" />
     <button class="btn" @click="addTodo">追加</button>

@@ -1,7 +1,11 @@
 <script setup>
-console.log('Blog')
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const id = ref(route.params.id)
 </script>
 
 <template>
-  <p>blog page</p>
+  <h1>Blog Page</h1>
+  <p>blog id = {{ id }}</p>
 </template>

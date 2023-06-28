@@ -22,6 +22,16 @@ const routes = [
     name: 'NotFound',
     component: () => import('../pages/NotFound.vue'),
   },
+  {
+    path: '/blog/',
+    name: 'Blog',
+    component: () => import('../pages/Blog.vue'),
+  },
+  {
+    path: '/blog/:id',
+    name: 'BlogId',
+    component: () => import('../pages/Blog.vue'),
+  },
 ]
 
 const router = createRouter({

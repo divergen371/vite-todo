@@ -7,6 +7,7 @@ import ButtonAdd from './ButtonAdd.vue'
 const todoRef = ref('')
 const isEditRef = ref(false)
 const { todoListRef, add, show, edit, del, check, countFin } = useTodoList()
+
 const addTodo = () => {
   add(todoRef.value)
   todoRef.value
